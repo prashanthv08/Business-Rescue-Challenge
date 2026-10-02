@@ -1,5 +1,10 @@
 # StoreSync - Perfect Backend Blueprint
 
+![Node.js](https://img.shields.io/badge/node-18%2B-brightgreen?style=flat-square&logo=node.js)
+![Express.js](https://img.shields.io/badge/express-v5.2.1-blue?style=flat-square&logo=express)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind-CSS-38B2AC?style=flat-square&logo=tailwind-css)
+![License](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)
+
 ## Overview
 StoreSync is a prototype and blueprint for an AI-powered inventory management and demand forecasting dashboard for retail stores. Designed for a strict budget, this project provides a fully functional Node.js/Express mock server and a highly interactive frontend dashboard that simulates Computer Vision AI models and PostgreSQL database integrations.
 
