@@ -243,7 +243,7 @@ function renderCustomerApp() {
         
         div.innerHTML = `
             <div class="w-12 h-12 bg-slate-100 rounded flex items-center justify-center ${opacity}">
-                <i class="fas fa-box text-slate-300 text-xl"></i>
+                <i aria-hidden="true" class="fas fa-box text-slate-300 text-xl"></i>
             </div>
             <div class="flex-1 ${opacity}">
                 <div class="font-bold text-sm text-slate-800 leading-tight">${escapeHTML(item.name)}</div>
@@ -484,7 +484,7 @@ function processDetections() {
                 actionEl.className = `p-3 rounded-lg border bg-warning/10 border-warning/30 flex justify-between items-center`;
                 actionEl.innerHTML = `
                     <div>
-                        <div class="text-sm font-bold text-warning"><i class="fas fa-exclamation-triangle mr-1"></i> Low Confidence (${det.confidence}%)</div>
+                        <div class="text-sm font-bold text-warning"><i aria-hidden="true" class="fas fa-exclamation-triangle mr-1"></i> Low Confidence (${det.confidence}%)</div>
                         <div class="text-xs text-warning/80">Verify count for: ${escapeHTML(det.label)}</div>
                     </div>
                     <div class="flex items-center gap-2 bg-darkBg rounded border border-warning/30">
@@ -499,7 +499,7 @@ function processDetections() {
                 actionEl.innerHTML = `
                     <div id="unknown-view-${safeId}" class="flex justify-between items-center w-full">
                         <div>
-                            <div class="text-sm font-bold text-danger"><i class="fas fa-question-circle mr-1"></i> New Product Detected</div>
+                            <div class="text-sm font-bold text-danger"><i aria-hidden="true" class="fas fa-question-circle mr-1"></i> New Product Detected</div>
                             <div class="text-xs text-danger/80">Found ${det.count}x "${escapeHTML(det.label)}"</div>
                         </div>
                         <button aria-label="Add new product" onclick="showAddProductForm('${safeId}')" class="text-xs bg-darkBg border border-danger/30 text-danger px-3 py-1.5 rounded hover:bg-danger/20 font-medium transition cursor-pointer">
@@ -614,7 +614,7 @@ window.applySync = function() {
         li.innerHTML = `
             <div>
                 <div class="font-medium text-textMain">${escapeHTML(adj.name)}</div>
-                <div class="text-xs text-textMuted">${adj.before} <i class="fas fa-arrow-right text-[10px] mx-1"></i> ${adj.after}</div>
+                <div class="text-xs text-textMuted">${adj.before} <i aria-hidden="true" class="fas fa-arrow-right text-[10px] mx-1"></i> ${adj.after}</div>
             </div>
             <div class="bg-darkBg border border-darkBorder px-2 py-1 rounded">
                 ${deltaHtml}
@@ -767,9 +767,9 @@ window.toggleMobileView = function() {
     
     if (isMobileView) {
         document.body.classList.add('force-mobile');
-        if(btn) btn.innerHTML = '<i class="fas fa-desktop group-hover:animate-pulse"></i> <span>Desktop View Preview</span>';
+        if(btn) btn.innerHTML = '<i aria-hidden="true" class="fas fa-desktop group-hover:animate-pulse"></i> <span>Desktop View Preview</span>';
     } else {
         document.body.classList.remove('force-mobile');
-        if(btn) btn.innerHTML = '<i class="fas fa-mobile-alt group-hover:animate-bounce"></i> <span>Mobile View Preview</span>';
+        if(btn) btn.innerHTML = '<i aria-hidden="true" class="fas fa-mobile-alt group-hover:animate-bounce"></i> <span>Mobile View Preview</span>';
     }
 };

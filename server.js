@@ -32,12 +32,20 @@ const limiter = rateLimit({
 });
 app.use(limiter);
 
-app.use(cors({ origin: '*' })); // Set explicit origin configuration
+app.use(cors({ origin: process.env.FRONTEND_URL || '*' })); // Default restricted origin or wildcard fallback
 app.use(express.json());
 
-// Serve the frontend prototype files directly from the backend
-app.use(express.static(path.join(__dirname, './'), { index: 'index.html', maxAge: '1d' })); // Added cache control
+// Block access to sensitive files
+app.use((req, res, next) => {
+    const forbidden = ['/server.js', '/server.test.js', '/package.json', '/vercel.json', '/.env', '/upload_github.js', '/better-fix-a11y.js', '/fix-a11y.js'];
+    if (forbidden.includes(req.path)) {
+        return res.status(403).json({ error: "Forbidden" });
+    }
+    next();
+});
 
+// Serve the frontend prototype files directly from the backend
+app.use(express.static(path.join(__dirname, './'), { index: 'index.html', maxAge: '1d' }));
 // Multer config for handling mobile camera/gallery image uploads in memory
 const upload = multer({ 
     storage: multer.memoryStorage(),
@@ -65,7 +73,12 @@ app.post('/api/inventory/update', (req, res) => {
     // Updates stock counts after an AI scan or manual entry
     const { updates } = req.body;
     
+    if (!Array.isArray(updates)) {
+        return res.status(400).json({ success: false, error: "Invalid payload format" });
+    }
+
     updates.forEach(update => {
+        if (typeof update.productId !== 'number' || typeof update.newStock !== 'number') return;
         const item = inventoryDB.find(i => i.id === update.productId);
         if (item) item.stock = update.newStock;
     });
@@ -107,6 +120,11 @@ app.post('/api/ai/scan-shelf', upload.single('shelfImage'), async (req, res) => 
 app.post('/api/integrations/pos-sync', (req, res) => {
     // Endpoint for legacy POS systems to push daily sales data
     const { source, syncData } = req.body;
+    
+    if (typeof source !== 'string' || typeof syncData !== 'object' || !syncData) {
+        return res.status(400).json({ success: false, error: "Invalid payload format" });
+    }
+
     console.log(`[SYNC] Received incoming ledger data from ${source} POS.`);
     
     // Implementation to merge POS ledger with StoreSync database would go here
