@@ -1,4 +1,4 @@
-# StoreSync 
+# StoreSync - Perfect Backend Blueprint
 
 ![Node.js](https://img.shields.io/badge/node-18%2B-brightgreen?style=flat-square&logo=node.js)
 ![Express.js](https://img.shields.io/badge/express-v5.2.1-blue?style=flat-square&logo=express)

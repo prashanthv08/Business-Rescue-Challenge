@@ -107,9 +107,13 @@ app.post('/api/integrations/pos-sync', (req, res) => {
 // ==========================================
 // SERVER INITIALIZATION
 // ==========================================
-app.listen(PORT, () => {
-    console.log(`=================================================`);
-    console.log(`🚀 StoreSync Backend running on http://localhost:${PORT}`);
-    console.log(`📦 Architecture ready for PostgreSQL & PyTorch.`);
-    console.log(`=================================================`);
-});
+if (require.main === module) {
+    app.listen(PORT, () => {
+        console.log(`=================================================`);
+        console.log(`🚀 StoreSync Backend running on http://localhost:${PORT}`);
+        console.log(`📦 Architecture ready for PostgreSQL & PyTorch.`);
+        console.log(`=================================================`);
+    });
+}
+
+module.exports = app;
