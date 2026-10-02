@@ -16,6 +16,8 @@ const express = require('express');
 const cors = require('cors');
 const multer = require('multer');
 const path = require('path');
+const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -23,14 +25,24 @@ const PORT = process.env.PORT || 3000;
 // ==========================================
 // MIDDLEWARE
 // ==========================================
-app.use(cors());
+app.use(helmet());
+const limiter = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    max: 100,
+});
+app.use(limiter);
+
+app.use(cors({ origin: '*' })); // Set explicit origin configuration
 app.use(express.json());
 
 // Serve the frontend prototype files directly from the backend
-app.use(express.static(path.join(__dirname, './'))); 
+app.use(express.static(path.join(__dirname, './'), { index: 'index.html', maxAge: '1d' })); // Added cache control
 
 // Multer config for handling mobile camera/gallery image uploads in memory
-const upload = multer({ storage: multer.memoryStorage() });
+const upload = multer({ 
+    storage: multer.memoryStorage(),
+    limits: { fileSize: 5 * 1024 * 1024 }
+});
 
 // ==========================================
 // MOCK DATABASE (In-Memory for Prototype)
@@ -69,9 +81,7 @@ app.post('/api/inventory/update', (req, res) => {
 app.post('/api/ai/scan-shelf', upload.single('shelfImage'), async (req, res) => {
     try {
         if (!req.file) return res.status(400).json({ error: 'No image captured.' });
-        
-        // SIMULATION: 1.5s delay to mimic heavy AI GPU processing time
-        await new Promise(resolve => setTimeout(resolve, 1500));
+        // SIMULATION: removed delay for efficiency
 
         // Simulated Object Detection Results returned by the CV model
         const aiDetections = [

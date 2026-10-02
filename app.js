@@ -5,6 +5,31 @@ let pendingAdjustments = [];
 let activeInventoryFilter = 'all';
 let inventorySearchQuery = '';
 let appPreviewSearchQuery = '';
+// Utility Functions
+function escapeHTML(str) {
+    if (typeof str !== 'string') return str;
+    return str.replace(/[&<>'"]/g, 
+        tag => ({
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            "'": '&#39;',
+            '"': '&quot;'
+        }[tag] || tag)
+    );
+}
+
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
 
 // DOM Elements
 document.addEventListener('DOMContentLoaded', () => {
@@ -19,18 +44,18 @@ document.addEventListener('DOMContentLoaded', () => {
     
     const inventorySearch = document.getElementById('inventory-search');
     if(inventorySearch) {
-        inventorySearch.addEventListener('input', (e) => {
+        inventorySearch.addEventListener('input', debounce((e) => {
             inventorySearchQuery = e.target.value.toLowerCase();
             renderDashboard();
-        });
+        }, 300));
     }
     
     const appSearch = document.getElementById('app-preview-search');
     if(appSearch) {
-        appSearch.addEventListener('input', (e) => {
+        appSearch.addEventListener('input', debounce((e) => {
             appPreviewSearchQuery = e.target.value.toLowerCase();
             renderCustomerApp();
-        });
+        }, 300));
     }
 
     // Initial page setup
@@ -153,14 +178,14 @@ function renderDashboard() {
 
             tr.innerHTML = `
                 <td class="p-4">
-                    <div class="font-medium text-textMain">${item.name}</div>
-                    <div class="text-xs text-textMuted">${item.brand} • ${item.unit}</div>
+                    <div class="font-medium text-textMain">${escapeHTML(item.name)}</div>
+                    <div class="text-xs text-textMuted">${escapeHTML(item.brand)} • ${escapeHTML(item.unit)}</div>
                 </td>
-                <td class="p-4 text-textMuted">${item.category}</td>
+                <td class="p-4 text-textMuted">${escapeHTML(item.category)}</td>
                 <td class="p-4 text-textMuted font-medium">₹${item.price}</td>
                 <td class="p-4 text-center">
                     <span class="font-bold ${item.systemStock === 0 ? 'text-danger drop-shadow-[0_0_5px_rgba(255,82,82,0.4)]' : 'text-textMain'} text-lg">${item.systemStock}</span>
-                    <div class="text-[10px] text-textMuted/70">Synced: ${timeAgo(item.lastSyncedAt)}</div>
+                    <div class="text-[10px] text-textMuted/70">Synced: ${escapeHTML(timeAgo(item.lastSyncedAt))}</div>
                 </td>
                 <td class="p-4 text-right">${statusBadge}</td>
             `;
@@ -221,12 +246,12 @@ function renderCustomerApp() {
                 <i class="fas fa-box text-slate-300 text-xl"></i>
             </div>
             <div class="flex-1 ${opacity}">
-                <div class="font-bold text-sm text-slate-800 leading-tight">${item.name}</div>
-                <div class="text-xs text-slate-500">${item.unit}</div>
+                <div class="font-bold text-sm text-slate-800 leading-tight">${escapeHTML(item.name)}</div>
+                <div class="text-xs text-slate-500">${escapeHTML(item.unit)}</div>
                 <div class="font-bold text-sm mt-1">₹${item.price}</div>
                 ${stockMsg}
             </div>
-            <button class="w-8 h-8 rounded-md flex items-center justify-center font-bold transition ${btnClass}" ${btnDisabled}>
+            <button aria-label="Action button" class="w-8 h-8 rounded-md flex items-center justify-center font-bold transition ${btnClass}" ${btnDisabled}>
                 +
             </button>
             ${item.systemStock === 0 ? '<div class="absolute inset-0 bg-slate-100/40 pointer-events-none"></div>' : ''}
@@ -420,13 +445,13 @@ function processDetections() {
         else diffHtml = `<span class="text-textMuted font-medium text-xs">OK</span>`;
         
         tr.innerHTML = `
-            <td class="px-4 py-2 font-medium text-textMain">${systemItem.name}</td>
+            <td class="px-4 py-2 font-medium text-textMain">${escapeHTML(systemItem.name)}</td>
             <td class="px-4 py-2 text-center text-textMuted">${systemItem.systemStock}</td>
             <td class="px-4 py-2 text-center">
                 <div class="inline-flex items-center gap-1 bg-darkBg rounded border border-darkBorder shadow-sm mx-auto">
-                    <button onclick="updateCount(${systemItem.id}, -1)" class="px-2 py-0.5 text-textMuted hover:bg-darkBorder/50 border-r border-darkBorder">-</button>
+                    <button aria-label="Decrease quantity" onclick="updateCount(${systemItem.id}, -1)" class="px-2 py-0.5 text-textMuted hover:bg-darkBorder/50 border-r border-darkBorder">-</button>
                     <span id="detected-count-${systemItem.id}" class="font-bold text-sm min-w-[24px] text-center text-textMain">${detectedCount}</span>
-                    <button onclick="updateCount(${systemItem.id}, 1)" class="px-2 py-0.5 text-textMuted hover:bg-darkBorder/50 border-l border-darkBorder">+</button>
+                    <button aria-label="Increase quantity" onclick="updateCount(${systemItem.id}, 1)" class="px-2 py-0.5 text-textMuted hover:bg-darkBorder/50 border-l border-darkBorder">+</button>
                 </div>
             </td>
             <td class="px-4 py-2 text-right" id="diff-col-${systemItem.id}">${diffHtml}</td>
@@ -446,7 +471,7 @@ function processDetections() {
                 boxEl.style.top = `${box.y}%`;
                 boxEl.style.width = `${box.w}%`;
                 boxEl.style.height = `${box.h}%`;
-                boxEl.innerHTML = `<div class="absolute -top-6 left-0 bg-darkCard border border-darkBorder text-white text-[9px] px-1.5 py-0.5 rounded whitespace-nowrap opacity-0 hover:opacity-100 transition shadow-lg">${det.label} (${det.confidence}%)</div>`;
+                boxEl.innerHTML = `<div class="absolute -top-6 left-0 bg-darkCard border border-darkBorder text-white text-[9px] px-1.5 py-0.5 rounded whitespace-nowrap opacity-0 hover:opacity-100 transition shadow-lg">${escapeHTML(det.label)} (${det.confidence}%)</div>`;
                 boxesContainer.appendChild(boxEl);
             });
         }
@@ -460,12 +485,12 @@ function processDetections() {
                 actionEl.innerHTML = `
                     <div>
                         <div class="text-sm font-bold text-warning"><i class="fas fa-exclamation-triangle mr-1"></i> Low Confidence (${det.confidence}%)</div>
-                        <div class="text-xs text-warning/80">Verify count for: ${det.label}</div>
+                        <div class="text-xs text-warning/80">Verify count for: ${escapeHTML(det.label)}</div>
                     </div>
                     <div class="flex items-center gap-2 bg-darkBg rounded border border-warning/30">
-                        <button onclick="updateCount(${det.productId}, -1)" class="px-3 py-1 text-textMuted hover:bg-darkBorder/50">-</button>
+                        <button aria-label="Decrease quantity" onclick="updateCount(${det.productId}, -1)" class="px-3 py-1 text-textMuted hover:bg-darkBorder/50">-</button>
                         <span id="action-count-${det.productId}" class="font-bold text-sm min-w-[20px] text-center text-textMain">${det.count}</span>
-                        <button onclick="updateCount(${det.productId}, 1)" class="px-3 py-1 text-textMuted hover:bg-darkBorder/50">+</button>
+                        <button aria-label="Decrease quantity" onclick="updateCount(${det.productId}, 1)" class="px-3 py-1 text-textMuted hover:bg-darkBorder/50">+</button>
                     </div>
                 `;
             } else {
@@ -475,21 +500,21 @@ function processDetections() {
                     <div id="unknown-view-${safeId}" class="flex justify-between items-center w-full">
                         <div>
                             <div class="text-sm font-bold text-danger"><i class="fas fa-question-circle mr-1"></i> New Product Detected</div>
-                            <div class="text-xs text-danger/80">Found ${det.count}x "${det.label}"</div>
+                            <div class="text-xs text-danger/80">Found ${det.count}x "${escapeHTML(det.label)}"</div>
                         </div>
-                        <button onclick="showAddProductForm('${safeId}')" class="text-xs bg-darkBg border border-danger/30 text-danger px-3 py-1.5 rounded hover:bg-danger/20 font-medium transition cursor-pointer">
+                        <button aria-label="Add new product" onclick="showAddProductForm('${safeId}')" class="text-xs bg-darkBg border border-danger/30 text-danger px-3 py-1.5 rounded hover:bg-danger/20 font-medium transition cursor-pointer">
                             Add to Inventory
                         </button>
                     </div>
                     <div id="unknown-form-${safeId}" class="hide w-full bg-darkBg/50 border border-darkBorder p-3 rounded mt-1">
                         <div class="text-[10px] font-bold text-textMuted mb-2 uppercase tracking-wider">Register New Item</div>
                         <div class="grid grid-cols-3 gap-2 mb-3">
-                            <input type="text" id="new-name-${safeId}" value="${det.label}" class="col-span-2 bg-darkCard border border-darkBorder rounded px-2 py-1.5 text-sm text-textMain focus:border-primary outline-none">
+                            <input type="text" id="new-name-${safeId}" value="${escapeHTML(det.label)}" class="col-span-2 bg-darkCard border border-darkBorder rounded px-2 py-1.5 text-sm text-textMain focus:border-primary outline-none">
                             <input type="number" id="new-price-${safeId}" placeholder="Price ₹" class="bg-darkCard border border-darkBorder rounded px-2 py-1.5 text-sm text-textMain focus:border-primary outline-none">
                         </div>
                         <div class="flex justify-end gap-2">
-                            <button onclick="cancelAddProduct('${safeId}')" class="text-xs text-textMuted hover:text-white px-3 py-1.5 transition">Cancel</button>
-                            <button onclick="confirmAddProduct('${det.label}', '${safeId}', ${det.count})" class="text-xs bg-success hover:bg-success/80 text-white px-4 py-1.5 rounded font-medium transition shadow-[0_0_10px_rgba(76,175,80,0.3)]">Save Product</button>
+                            <button aria-label="Cancel adding product" onclick="cancelAddProduct('${safeId}')" class="text-xs text-textMuted hover:text-white px-3 py-1.5 transition">Cancel</button>
+                            <button aria-label="Confirm adding product" onclick="confirmAddProduct('${det.label}', '${safeId}', ${det.count})" class="text-xs bg-success hover:bg-success/80 text-white px-4 py-1.5 rounded font-medium transition shadow-[0_0_10px_rgba(76,175,80,0.3)]">Save Product</button>
                         </div>
                     </div>
                 `;
@@ -588,7 +613,7 @@ window.applySync = function() {
         
         li.innerHTML = `
             <div>
-                <div class="font-medium text-textMain">${adj.name}</div>
+                <div class="font-medium text-textMain">${escapeHTML(adj.name)}</div>
                 <div class="text-xs text-textMuted">${adj.before} <i class="fas fa-arrow-right text-[10px] mx-1"></i> ${adj.after}</div>
             </div>
             <div class="bg-darkBg border border-darkBorder px-2 py-1 rounded">

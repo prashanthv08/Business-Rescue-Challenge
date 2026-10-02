@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="StoreSync - AI-powered inventory and demand forecasting dashboard for local stores.">
     <title>NOVA CART - StoreSync Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -168,13 +169,13 @@
             </div>
             <h1 class="font-bold text-xl bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400 drop-shadow-sm font-heading tracking-tight">StoreSync</h1>
         </div>
-        <button id="toggle-customer-app-mobile" class="text-textMuted hover:text-primary transition">
+        <button aria-label="Toggle Customer App Preview" id="toggle-customer-app-mobile" class="text-textMuted hover:text-primary transition">
             <i class="fas fa-mobile-screen text-xl"></i>
         </button>
     </header>
 
     <!-- Sidebar (Desktop) -->
-    <aside class="hidden md:flex w-64 bg-darkSidebar border-r border-darkBorder flex-col z-10 relative shrink-0">
+    <a aria-label="Navigation link"side class="hidden md:flex w-64 bg-darkSidebar border-r border-darkBorder flex-col z-10 relative shrink-0">
         <div class="p-6 flex items-center gap-3">
             <div class="w-10 h-10 rounded-xl shadow-[0_0_15px_rgba(109,91,238,0.4)] overflow-hidden bg-darkBg border border-darkBorder">
                 <img src="logo.jpg" alt="Logo" class="w-full h-full object-cover">
@@ -186,24 +187,24 @@
         </div>
         
         <nav class="flex-1 mt-4 space-y-2 px-3" id="sidebar-nav">
-            <a href="#" onclick="switchPage('dashboard')" id="nav-dashboard" class="nav-link flex items-center justify-between px-4 py-3 text-textMuted hover:bg-darkBorder/30 rounded-lg font-medium transition border-l-4 border-transparent">
+            <a aria-label="Dashboard page" href="#" onclick="switchPage('dashboard')" id="nav-dashboard" class="nav-link flex items-center justify-between px-4 py-3 text-textMuted hover:bg-darkBorder/30 rounded-lg font-medium transition border-l-4 border-transparent">
                 <div class="flex items-center gap-3"><i class="fas fa-chart-line w-5 text-center"></i> Dashboard</div>
             </a>
-            <a href="#" onclick="switchPage('inventory')" id="nav-inventory" class="nav-link active flex items-center justify-between px-4 py-3 text-textMuted hover:bg-darkBorder/30 rounded-lg font-medium transition border-l-4 border-transparent">
+            <a aria-label="Inventory page" href="#" onclick="switchPage('inventory')" id="nav-inventory" class="nav-link active flex items-center justify-between px-4 py-3 text-textMuted hover:bg-darkBorder/30 rounded-lg font-medium transition border-l-4 border-transparent">
                 <div class="flex items-center gap-3"><i class="fas fa-boxes-stacked w-5 text-center"></i> Inventory</div>
                 <span class="bg-danger text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-[0_0_8px_rgba(255,82,82,0.6)]">6</span>
             </a>
-            <a href="#" onclick="switchPage('demand')" id="nav-demand" class="nav-link flex items-center justify-between px-4 py-3 text-textMuted hover:bg-darkBorder/30 rounded-lg font-medium transition border-l-4 border-transparent">
+            <a aria-label="Demand Forecast page" href="#" onclick="switchPage('demand')" id="nav-demand" class="nav-link flex items-center justify-between px-4 py-3 text-textMuted hover:bg-darkBorder/30 rounded-lg font-medium transition border-l-4 border-transparent">
                 <div class="flex items-center gap-3"><i class="fas fa-chart-pie w-5 text-center"></i> Demand Forecast</div>
             </a>
-            <a href="#" onclick="switchPage('alerts')" id="nav-alerts" class="nav-link flex items-center justify-between px-4 py-3 text-textMuted hover:bg-darkBorder/30 rounded-lg font-medium transition border-l-4 border-transparent">
+            <a aria-label="Alerts page" href="#" onclick="switchPage('alerts')" id="nav-alerts" class="nav-link flex items-center justify-between px-4 py-3 text-textMuted hover:bg-darkBorder/30 rounded-lg font-medium transition border-l-4 border-transparent">
                 <div class="flex items-center gap-3"><i class="fas fa-bell w-5 text-center"></i> Alerts</div>
                 <span class="bg-danger text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-[0_0_8px_rgba(255,82,82,0.6)]">3</span>
             </a>
-            <a href="#" onclick="switchPage('analytics')" id="nav-analytics" class="nav-link flex items-center justify-between px-4 py-3 text-textMuted hover:bg-darkBorder/30 rounded-lg font-medium transition border-l-4 border-transparent">
+            <a aria-label="Analytics page" href="#" onclick="switchPage('analytics')" id="nav-analytics" class="nav-link flex items-center justify-between px-4 py-3 text-textMuted hover:bg-darkBorder/30 rounded-lg font-medium transition border-l-4 border-transparent">
                 <div class="flex items-center gap-3"><i class="fas fa-chart-bar w-5 text-center"></i> Analytics</div>
             </a>
-            <a href="#" onclick="switchPage('integrations')" id="nav-integrations" class="nav-link flex items-center justify-between px-4 py-3 text-textMuted hover:bg-darkBorder/30 rounded-lg font-medium transition border-l-4 border-transparent">
+            <a aria-label="Integrations page" href="#" onclick="switchPage('integrations')" id="nav-integrations" class="nav-link flex items-center justify-between px-4 py-3 text-textMuted hover:bg-darkBorder/30 rounded-lg font-medium transition border-l-4 border-transparent">
                 <div class="flex items-center gap-3"><i class="fas fa-plug w-5 text-center"></i> Integrations</div>
             </a>
         </nav>
@@ -239,11 +240,11 @@
                     <i class="fas fa-bullseye text-primary"></i>
                     <span class="text-textMuted">Accuracy:</span> <strong class="text-textMain">87%</strong>
                 </div>
-                <button onclick="switchPage('alerts')" class="w-10 h-10 rounded-full bg-darkCard border border-darkBorder flex items-center justify-center text-textMuted hover:text-white transition shadow-md relative">
+                <button aria-label="View Alerts" onclick="switchPage('alerts')" class="w-10 h-10 rounded-full bg-darkCard border border-darkBorder flex items-center justify-center text-textMuted hover:text-white transition shadow-md relative">
                     <i class="fas fa-bell"></i>
                     <span class="absolute top-0 right-0 w-3 h-3 bg-danger rounded-full border-2 border-darkBg shadow-[0_0_8px_rgba(255,82,82,0.6)]"></span>
                 </button>
-                <button onclick="toggleCustomerAppPanel()" class="bg-darkCard border border-darkBorder hover:bg-darkBorder/80 text-textMain px-4 py-2 rounded-lg text-sm font-medium transition flex items-center gap-2 shadow-md">
+                <button aria-label="Preview App" onclick="toggleCustomerAppPanel()" class="bg-darkCard border border-darkBorder hover:bg-darkBorder/80 text-textMain px-4 py-2 rounded-lg text-sm font-medium transition flex items-center gap-2 shadow-md">
                     <i class="fas fa-mobile-screen"></i> App Preview
                 </button>
             </div>
@@ -413,15 +414,15 @@
         <div id="page-inventory" class="page-section max-w-6xl mx-auto p-4 md:p-8 md:pt-4 relative z-10">
             <div class="inventory-actions flex justify-between items-end mb-6">
                 <div class="flex gap-2">
-                    <button onclick="setInventoryFilter('all', this)" class="filter-btn bg-[#252538] text-white px-4 py-2 rounded-lg text-sm font-medium border border-darkBorder transition">All Items</button>
-                    <button onclick="setInventoryFilter('low', this)" class="filter-btn bg-darkBg text-textMuted px-4 py-2 rounded-lg text-sm font-medium border border-darkBorder hover:bg-darkBorder/50 transition">Low Stock</button>
-                    <button onclick="setInventoryFilter('out', this)" class="filter-btn bg-darkBg text-textMuted px-4 py-2 rounded-lg text-sm font-medium border border-darkBorder hover:bg-darkBorder/50 transition">Out of Stock</button>
+                    <button aria-label="Filter All Items" onclick="setInventoryFilter('all', this)" class="filter-btn bg-[#252538] text-white px-4 py-2 rounded-lg text-sm font-medium border border-darkBorder transition">All Items</button>
+                    <button aria-label="Filter Low Stock Items" onclick="setInventoryFilter('low', this)" class="filter-btn bg-darkBg text-textMuted px-4 py-2 rounded-lg text-sm font-medium border border-darkBorder hover:bg-darkBorder/50 transition">Low Stock</button>
+                    <button aria-label="Filter Out of Stock Items" onclick="setInventoryFilter('out', this)" class="filter-btn bg-darkBg text-textMuted px-4 py-2 rounded-lg text-sm font-medium border border-darkBorder hover:bg-darkBorder/50 transition">Out of Stock</button>
                 </div>
                 <div class="flex items-center gap-3">
-                    <button onclick="openManualAddModal()" class="bg-darkBg border border-darkBorder text-textMain hover:bg-darkBorder/50 px-5 py-2.5 rounded-lg font-medium flex items-center gap-2 transition shadow-sm">
+                    <button aria-label="Add Product Manually" onclick="openManualAddModal()" class="bg-darkBg border border-darkBorder text-textMain hover:bg-darkBorder/50 px-5 py-2.5 rounded-lg font-medium flex items-center gap-2 transition shadow-sm">
                         <i class="fas fa-plus"></i> Add Product
                     </button>
-                    <button onclick="openSyncModal()" class="bg-primary hover:bg-primaryHover text-white px-5 py-2.5 rounded-lg font-medium flex items-center gap-2 shadow-[0_0_15px_rgba(109,91,238,0.5)] transition transform hover:-translate-y-0.5">
+                    <button aria-label="AI Shelf Sync" onclick="openSyncModal()" class="bg-primary hover:bg-primaryHover text-white px-5 py-2.5 rounded-lg font-medium flex items-center gap-2 shadow-[0_0_15px_rgba(109,91,238,0.5)] transition transform hover:-translate-y-0.5">
                         <i class="fas fa-camera"></i> AI Shelf Sync
                     </button>
                 </div>
@@ -538,7 +539,7 @@
                             <span class="text-xs text-textMuted font-medium">5 min ago</span>
                         </div>
                         <p class="text-sm text-textMuted mt-1 mb-3">This item has received 4 search attempts in the last hour. 18 orders predicted today. Immediate restock recommended to avoid cancellations.</p>
-                        <button onclick="handleViewItem('Parle-G')" class="bg-darkBg border border-darkBorder text-textMain px-4 py-1.5 rounded text-sm font-medium hover:bg-darkBorder/50 transition">View Item</button>
+                        <button aria-label="View Item Details" onclick="handleViewItem('Parle-G')" class="bg-darkBg border border-darkBorder text-textMain px-4 py-1.5 rounded text-sm font-medium hover:bg-darkBorder/50 transition">View Item</button>
                     </div>
                 </div>
 
@@ -551,7 +552,7 @@
                             <span class="text-xs text-textMuted font-medium">12 min ago</span>
                         </div>
                         <p class="text-sm text-textMuted mt-1 mb-3">Morning demand surge expected. 12 predicted orders. Last restocked 5 hours ago. Each missed order costs you ₹35 and reduces your accuracy score.</p>
-                        <button onclick="handleViewItem('Mother Dairy')" class="bg-darkBg border border-darkBorder text-textMain px-4 py-1.5 rounded text-sm font-medium hover:bg-darkBorder/50 transition">View Item</button>
+                        <button aria-label="View Item Details" onclick="handleViewItem('Mother Dairy')" class="bg-darkBg border border-darkBorder text-textMain px-4 py-1.5 rounded text-sm font-medium hover:bg-darkBorder/50 transition">View Item</button>
                     </div>
                 </div>
 
@@ -564,7 +565,7 @@
                             <span class="text-xs text-textMuted font-medium">25 min ago</span>
                         </div>
                         <p class="text-sm text-textMuted mt-1 mb-3">Only 3 units remaining. At current demand rate (22/day), stock will deplete in approximately 3 hours. Predicted demand: 28 units today.</p>
-                        <button onclick="handleReorder('Maggi Noodles')" class="bg-darkBg border border-darkBorder text-textMain px-4 py-1.5 rounded text-sm font-medium hover:bg-darkBorder/50 transition">Reorder</button>
+                        <button aria-label="Reorder Item" onclick="handleReorder('Maggi Noodles')" class="bg-darkBg border border-darkBorder text-textMain px-4 py-1.5 rounded text-sm font-medium hover:bg-darkBorder/50 transition">Reorder</button>
                     </div>
                 </div>
             </div>
@@ -664,7 +665,7 @@
                         <h3 class="text-lg font-bold text-textMain mb-2">TallyPrime / Tally ERP 9</h3>
                         <p class="text-sm text-textMuted mb-4">Automatically sync your physical counter sales directly to NOVA CART. When an item is billed at your counter, online inventory is reduced instantly.</p>
                     </div>
-                    <button onclick="handleIntegration('Tally')" class="w-full bg-darkBg border border-primary text-primary hover:bg-primary/10 py-2.5 rounded-lg font-medium transition mt-4">Connect POS</button>
+                    <button aria-label="Button" onclick="handleIntegration('Tally')" class="w-full bg-darkBg border border-primary text-primary hover:bg-primary/10 py-2.5 rounded-lg font-medium transition mt-4">Connect POS</button>
                 </div>
 
                 <!-- Vyapar Integration -->
@@ -679,7 +680,7 @@
                         <h3 class="text-lg font-bold text-textMain mb-2">Vyapar Billing</h3>
                         <p class="text-sm text-textMuted mb-4">Seamlessly connect your Vyapar app to auto-deduct online stock when physical walk-in sales occur.</p>
                     </div>
-                    <button onclick="handleIntegration('Vyapar')" class="w-full bg-darkBg border border-primary text-primary hover:bg-primary/10 py-2.5 rounded-lg font-medium transition mt-4">Connect POS</button>
+                    <button aria-label="Button" onclick="handleIntegration('Vyapar')" class="w-full bg-darkBg border border-primary text-primary hover:bg-primary/10 py-2.5 rounded-lg font-medium transition mt-4">Connect POS</button>
                 </div>
 
                 <!-- Marg ERP Integration -->
@@ -693,7 +694,7 @@
                         <h3 class="text-lg font-bold text-textMain mb-2">Marg ERP</h3>
                         <p class="text-sm text-textMuted mb-4">Enterprise POS sync for larger retail and pharmacy stores. Full SKU mapping supported.</p>
                     </div>
-                    <button onclick="handleIntegration('Marg ERP')" class="w-full bg-darkBg border border-darkBorder text-textMuted hover:text-white py-2.5 rounded-lg font-medium transition hover:bg-darkBorder/50 mt-4">Request Access</button>
+                    <button aria-label="Button" onclick="handleIntegration('Marg ERP')" class="w-full bg-darkBg border border-darkBorder text-textMuted hover:text-white py-2.5 rounded-lg font-medium transition hover:bg-darkBorder/50 mt-4">Request Access</button>
                 </div>
 
                 <!-- AI Camera Sync -->
@@ -709,7 +710,7 @@
                         <h3 class="text-lg font-bold text-textMain mb-2">AI Shelf Sync (No POS needed)</h3>
                         <p class="text-sm text-textMain/80 mb-4">Don't have modern POS software? No problem. Use our built-in AI Camera tool to update your inventory in seconds without any complex integration.</p>
                     </div>
-                    <button onclick="switchPage('inventory'); setTimeout(openSyncModal, 100);" class="w-full bg-primary hover:bg-primaryHover text-white py-2.5 rounded-lg font-medium transition shadow-[0_0_10px_rgba(109,91,238,0.4)] mt-4">Launch Camera Tool</button>
+                    <button aria-label="Button" onclick="switchPage('inventory'); setTimeout(openSyncModal, 100);" class="w-full bg-primary hover:bg-primaryHover text-white py-2.5 rounded-lg font-medium transition shadow-[0_0_10px_rgba(109,91,238,0.4)] mt-4">Launch Camera Tool</button>
                 </div>
             </div>
         </div>
@@ -722,7 +723,7 @@
                 <h3 class="font-bold text-slate-800">NOVA CART App</h3>
                 <p class="text-xs text-green-600 font-medium"><i class="fas fa-bolt"></i> Live Sync Active</p>
             </div>
-            <button onclick="closeCustomerAppPanel()" class="text-slate-400 hover:text-slate-600"><i class="fas fa-times text-lg"></i></button>
+            <button aria-label="Button" onclick="closeCustomerAppPanel()" class="text-slate-400 hover:text-slate-600"><i class="fas fa-times text-lg"></i></button>
         </div>
         
         <div class="flex-1 overflow-y-auto bg-slate-100 p-3">
@@ -755,7 +756,7 @@
             
             <div class="px-6 py-4 border-b border-darkBorder flex justify-between items-center bg-darkCard z-10">
                 <h2 class="font-bold text-lg text-textMain">AI Shelf Sync</h2>
-                <button onclick="closeSyncModal()" class="text-textMuted hover:text-white bg-darkBg border border-darkBorder rounded-full w-8 h-8 flex items-center justify-center transition"><i class="fas fa-times"></i></button>
+                <button aria-label="Close Sync Modal" onclick="closeSyncModal()" class="text-textMuted hover:text-white bg-darkBg border border-darkBorder rounded-full w-8 h-8 flex items-center justify-center transition"><i class="fas fa-times"></i></button>
             </div>
 
             <!-- Stepper -->
@@ -801,15 +802,15 @@
                         <input type="file" id="image-upload-input" accept="image/*" class="hidden">
                         <input type="file" id="camera-upload-input" accept="image/*" capture="environment" class="hidden">
                         <div class="flex flex-wrap justify-center gap-3 w-full">
-                            <button onclick="document.getElementById('camera-upload-input').click()" class="bg-primary text-white border border-primaryHover px-5 py-2.5 rounded-lg text-sm font-medium hover:bg-primaryHover transition shadow-md flex items-center gap-2">
+                            <button aria-label="Button" onclick="document.getElementById('camera-upload-input').click()" class="bg-primary text-white border border-primaryHover px-5 py-2.5 rounded-lg text-sm font-medium hover:bg-primaryHover transition shadow-md flex items-center gap-2">
                                 <i class="fas fa-camera text-lg"></i> Take Photo
                             </button>
-                            <button onclick="document.getElementById('image-upload-input').click()" class="bg-darkCard border border-darkBorder text-textMain px-5 py-2.5 rounded-lg text-sm font-medium hover:bg-darkBorder transition shadow-md flex items-center gap-2">
+                            <button aria-label="Button" onclick="document.getElementById('image-upload-input').click()" class="bg-darkCard border border-darkBorder text-textMain px-5 py-2.5 rounded-lg text-sm font-medium hover:bg-darkBorder transition shadow-md flex items-center gap-2">
                                 <i class="fas fa-image text-lg text-primary"></i> Gallery
                             </button>
                         </div>
                         <div class="mt-4">
-                            <button onclick="useDemoImage()" class="bg-darkBg text-textMuted px-4 py-2 rounded-lg text-xs font-medium hover:text-white transition">
+                            <button aria-label="Button" onclick="useDemoImage()" class="bg-darkBg text-textMuted px-4 py-2 rounded-lg text-xs font-medium hover:text-white transition">
                                 <i class="fas fa-magic mr-1"></i> Use Demo Image Instead
                             </button>
                         </div>
@@ -818,7 +819,7 @@
                     <div id="image-preview-container" class="hide mt-4 border border-darkBorder rounded-xl overflow-hidden relative shadow-lg">
                         <img id="image-preview" src="" alt="Shelf preview" class="w-full h-48 object-cover">
                         <div class="absolute top-2 right-2 flex gap-2">
-                            <button onclick="resetUpload()" class="bg-black/60 hover:bg-black/80 border border-white/20 text-white rounded-full w-8 h-8 flex items-center justify-center transition backdrop-blur-md">
+                            <button aria-label="Button" onclick="resetUpload()" class="bg-black/60 hover:bg-black/80 border border-white/20 text-white rounded-full w-8 h-8 flex items-center justify-center transition backdrop-blur-md">
                                 <i class="fas fa-trash-alt text-sm"></i>
                             </button>
                         </div>
@@ -902,14 +903,14 @@
 
             <!-- Footer Controls -->
             <div class="px-6 py-4 border-t border-darkBorder bg-[#191924] flex justify-between items-center z-10" id="modal-footer">
-                <button id="btn-cancel" onclick="closeSyncModal()" class="text-textMuted hover:text-white font-medium px-4 py-2 transition">Cancel</button>
-                <button id="btn-next-scan" onclick="startScan()" class="hide bg-primary hover:bg-primaryHover text-white px-6 py-2 rounded-lg font-medium transition shadow-[0_0_15px_rgba(109,91,238,0.5)] flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                <button aria-label="Close Sync Modal" id="btn-cancel" onclick="closeSyncModal()" class="text-textMuted hover:text-white font-medium px-4 py-2 transition">Cancel</button>
+                <button aria-label="Next Scan Step" id="btn-next-scan" onclick="startScan()" class="hide bg-primary hover:bg-primaryHover text-white px-6 py-2 rounded-lg font-medium transition shadow-[0_0_15px_rgba(109,91,238,0.5)] flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
                     Scan Shelf <i class="fas fa-arrow-right"></i>
                 </button>
-                <button id="btn-confirm-sync" onclick="applySync()" class="hide bg-primary hover:bg-primaryHover text-white px-6 py-2 rounded-lg font-medium transition shadow-[0_0_15px_rgba(109,91,238,0.5)] flex items-center gap-2">
+                <button aria-label="Confirm Sync" id="btn-confirm-sync" onclick="applySync()" class="hide bg-primary hover:bg-primaryHover text-white px-6 py-2 rounded-lg font-medium transition shadow-[0_0_15px_rgba(109,91,238,0.5)] flex items-center gap-2">
                     <i class="fas fa-cloud-arrow-up"></i> Update Inventory
                 </button>
-                <button id="btn-done" onclick="closeSyncModal()" class="hide bg-white text-black hover:bg-slate-200 px-6 py-2 rounded-lg font-medium transition shadow-md w-full sm:w-auto text-center">
+                <button aria-label="Close Sync Modal" id="btn-done" onclick="closeSyncModal()" class="hide bg-white text-black hover:bg-slate-200 px-6 py-2 rounded-lg font-medium transition shadow-md w-full sm:w-auto text-center">
                     Done
                 </button>
             </div>
@@ -921,7 +922,7 @@
         <div id="manual-add-modal" class="bg-darkCard rounded-2xl shadow-2xl border border-darkBorder w-full max-w-md flex flex-col overflow-hidden transform scale-95 transition-transform duration-200">
             <div class="px-6 py-4 border-b border-darkBorder flex justify-between items-center bg-darkCard z-10">
                 <h2 class="font-bold text-lg text-textMain">Add New Product</h2>
-                <button onclick="closeManualAddModal()" class="text-textMuted hover:text-white bg-darkBg border border-darkBorder rounded-full w-8 h-8 flex items-center justify-center transition"><i class="fas fa-times"></i></button>
+                <button aria-label="Close Add Product Modal" onclick="closeManualAddModal()" class="text-textMuted hover:text-white bg-darkBg border border-darkBorder rounded-full w-8 h-8 flex items-center justify-center transition"><i class="fas fa-times"></i></button>
             </div>
             <div class="p-6 space-y-4">
                 <div>
@@ -956,31 +957,31 @@
                 </div>
             </div>
             <div class="px-6 py-4 border-t border-darkBorder bg-[#191924] flex justify-end gap-3">
-                <button onclick="closeManualAddModal()" class="text-textMuted hover:text-white font-medium px-4 py-2 transition text-sm">Cancel</button>
-                <button onclick="submitManualProduct()" class="bg-primary hover:bg-primaryHover text-white px-5 py-2 rounded-lg font-medium transition shadow-[0_0_15px_rgba(109,91,238,0.5)] text-sm">Save Product</button>
+                <button aria-label="Close Add Product Modal" onclick="closeManualAddModal()" class="text-textMuted hover:text-white font-medium px-4 py-2 transition text-sm">Cancel</button>
+                <button aria-label="Submit Product" onclick="submitManualProduct()" class="bg-primary hover:bg-primaryHover text-white px-5 py-2 rounded-lg font-medium transition shadow-[0_0_15px_rgba(109,91,238,0.5)] text-sm">Save Product</button>
             </div>
         </div>
     </div>
 
     <!-- Mobile Bottom Navigation -->
     <nav class="md:hidden absolute bottom-0 left-0 w-full bg-darkSidebar border-t border-darkBorder flex justify-around items-center pb-safe pt-2 z-40" style="padding-bottom: max(0.5rem, env(safe-area-inset-bottom));">
-        <button onclick="switchPage('dashboard')" id="mob-nav-dashboard" class="mob-nav-link flex flex-col items-center text-primary p-2 transition">
+        <button aria-label="Button" onclick="switchPage('dashboard')" id="mob-nav-dashboard" class="mob-nav-link flex flex-col items-center text-primary p-2 transition">
             <i class="fas fa-chart-line text-lg mb-1"></i>
             <span class="text-[10px] font-medium">Home</span>
         </button>
-        <button onclick="switchPage('inventory')" id="mob-nav-inventory" class="mob-nav-link flex flex-col items-center text-textMuted hover:text-white p-2 transition">
+        <button aria-label="Button" onclick="switchPage('inventory')" id="mob-nav-inventory" class="mob-nav-link flex flex-col items-center text-textMuted hover:text-white p-2 transition">
             <i class="fas fa-boxes-stacked text-lg mb-1"></i>
             <span class="text-[10px] font-medium">Stock</span>
         </button>
-        <button onclick="openSyncModal()" class="flex flex-col items-center text-white bg-primary w-14 h-14 rounded-full justify-center -mt-8 shadow-[0_0_15px_rgba(109,91,238,0.5)] border-4 border-[#1C1C28] z-50 transform hover:scale-105 transition">
+        <button aria-label="AI Shelf Sync" onclick="openSyncModal()" class="flex flex-col items-center text-white bg-primary w-14 h-14 rounded-full justify-center -mt-8 shadow-[0_0_15px_rgba(109,91,238,0.5)] border-4 border-[#1C1C28] z-50 transform hover:scale-105 transition">
             <i class="fas fa-camera text-xl"></i>
         </button>
-        <button onclick="switchPage('alerts')" id="mob-nav-alerts" class="mob-nav-link flex flex-col items-center text-textMuted hover:text-white p-2 relative transition">
+        <button aria-label="View Alerts" onclick="switchPage('alerts')" id="mob-nav-alerts" class="mob-nav-link flex flex-col items-center text-textMuted hover:text-white p-2 relative transition">
             <i class="fas fa-bell text-lg mb-1"></i>
             <span class="text-[10px] font-medium">Alerts</span>
             <span class="absolute top-1 right-2 w-2 h-2 bg-danger rounded-full border border-darkSidebar"></span>
         </button>
-        <button onclick="switchPage('integrations')" id="mob-nav-integrations" class="mob-nav-link flex flex-col items-center text-textMuted hover:text-white p-2 transition">
+        <button aria-label="Button" onclick="switchPage('integrations')" id="mob-nav-integrations" class="mob-nav-link flex flex-col items-center text-textMuted hover:text-white p-2 transition">
             <i class="fas fa-plug text-lg mb-1"></i>
             <span class="text-[10px] font-medium">POS</span>
         </button>
@@ -995,7 +996,7 @@
     </div> <!-- End of #app-container -->
 
     <!-- Toggle Button fixed at bottom right of the browser -->
-    <button onclick="toggleMobileView()" id="view-toggle-btn" class="fixed bottom-6 right-6 z-[100] bg-[#252538] hover:bg-primary border border-darkBorder text-white px-6 py-3 rounded-full shadow-[0_10px_30px_rgba(0,0,0,0.5)] font-medium text-sm transition-all flex items-center gap-2 group hidden md:flex">
+    <button aria-label="Toggle Mobile View" onclick="toggleMobileView()" id="view-toggle-btn" class="fixed bottom-6 right-6 z-[100] bg-[#252538] hover:bg-primary border border-darkBorder text-white px-6 py-3 rounded-full shadow-[0_10px_30px_rgba(0,0,0,0.5)] font-medium text-sm transition-all flex items-center gap-2 group hidden md:flex">
         <i class="fas fa-mobile-alt group-hover:animate-bounce text-lg"></i> <span>Mobile View Preview</span>
     </button>
     
