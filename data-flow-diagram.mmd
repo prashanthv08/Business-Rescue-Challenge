@@ -1,0 +1,17 @@
+sequenceDiagram
+    participant User
+    participant Frontend
+    participant Backend (Express)
+    participant AI (Simulated)
+
+    User->>Frontend: Uploads/Captures Shelf Image
+    Frontend->>Frontend: Display Preview & Bounding Boxes logic
+    Frontend->>Backend: POST /api/ai/scan-shelf (Multipart form-data)
+    Backend->>Backend: Multer processes image into buffer
+    Backend->>AI: Send buffer (Simulated 1.5s delay)
+    AI-->>Backend: Return detected products, counts, confidence
+    Backend-->>Frontend: JSON response with detections
+    Frontend->>User: Displays diff table & low-confidence alerts
+    User->>Frontend: Confirms stock adjustments
+    Frontend->>Backend: POST /api/inventory/update
+    Backend-->>Frontend: Success Message

@@ -1,0 +1,37 @@
+graph TD
+    %% Frontend Components
+    subgraph Frontend [Frontend Client]
+        UI[StoreSync Dashboard HTML/Tailwind]
+        State[App State app.js]
+        MockDB[Frontend Data data.js]
+    end
+
+    %% Backend Components
+    subgraph Backend [Node.js / Express Server]
+        API[Express Router server.js]
+        Upload[Multer Image Processing]
+        SimDB[In-Memory Mock DB]
+    end
+
+    %% Simulated / Future Components
+    subgraph Future [Production Microservices]
+        PostgreSQL[(PostgreSQL DB)]
+        AI_CV[PyTorch/TensorFlow CV Model]
+        POS[Legacy POS Webhooks]
+    end
+
+    %% Flow
+    UI <-->|REST API / JSON| API
+    State --> UI
+    MockDB --> State
+    API --> Upload
+    Upload -->|Simulated Delay| API
+    API <--> SimDB
+    
+    %% Production Connections (Dotted)
+    API -.->|Proxy image data| AI_CV
+    API -.->|CRUD| PostgreSQL
+    POS -.->|Sync Data| API
+    
+    classDef future stroke-dasharray: 5 5, fill:#2d2d3f,stroke:#6d5bee;
+    class Future,PostgreSQL,AI_CV,POS future;
