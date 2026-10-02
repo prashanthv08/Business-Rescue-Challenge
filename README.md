@@ -1,4 +1,4 @@
-# StoreSync 
+# StoreSync - Perfect Backend Blueprint
 
 ## Overview
 StoreSync is a prototype and blueprint for an AI-powered inventory management and demand forecasting dashboard for retail stores. Designed for a strict budget, this project provides a fully functional Node.js/Express mock server and a highly interactive frontend dashboard that simulates Computer Vision AI models and PostgreSQL database integrations.
@@ -43,6 +43,70 @@ StoreSync is a prototype and blueprint for an AI-powered inventory management an
 - `server.js`: The Express mock server simulating backend APIs and AI processing delay.
 - `package.json`: Project metadata and dependencies (`express`, `cors`, `multer`).
 - `logo.jpg`: Application logo.
+
+## System Architecture & Data Flow
+
+### 1. Architecture Diagram
+```mermaid
+graph TD
+    %% Frontend Components
+    subgraph Frontend [Frontend Client]
+        UI[StoreSync Dashboard HTML/Tailwind]
+        State[App State app.js]
+        MockDB[Frontend Data data.js]
+    end
+
+    %% Backend Components
+    subgraph Backend [Node.js / Express Server]
+        API[Express Router server.js]
+        Upload[Multer Image Processing]
+        SimDB[In-Memory Mock DB]
+    end
+
+    %% Simulated / Future Components
+    subgraph Future [Production Microservices]
+        PostgreSQL[(PostgreSQL DB)]
+        AI_CV[PyTorch/TensorFlow CV Model]
+        POS[Legacy POS Webhooks]
+    end
+
+    %% Flow
+    UI <-->|REST API / JSON| API
+    State --> UI
+    MockDB --> State
+    API --> Upload
+    Upload -->|Simulated Delay| API
+    API <--> SimDB
+    
+    %% Production Connections (Dotted)
+    API -.->|Proxy image data| AI_CV
+    API -.->|CRUD| PostgreSQL
+    POS -.->|Sync Data| API
+    
+    classDef future stroke-dasharray: 5 5, fill:#2d2d3f,stroke:#6d5bee;
+    class Future,PostgreSQL,AI_CV,POS future;
+```
+
+### 2. AI Shelf Sync Data Flow
+```mermaid
+sequenceDiagram
+    participant User
+    participant Frontend
+    participant Backend (Express)
+    participant AI (Simulated)
+
+    User->>Frontend: Uploads/Captures Shelf Image
+    Frontend->>Frontend: Display Preview & Bounding Boxes logic
+    Frontend->>Backend: POST /api/ai/scan-shelf (Multipart form-data)
+    Backend->>Backend: Multer processes image into buffer
+    Backend->>AI: Send buffer (Simulated 1.5s delay)
+    AI-->>Backend: Return detected products, counts, confidence
+    Backend-->>Frontend: JSON response with detections
+    Frontend->>User: Displays diff table & low-confidence alerts
+    User->>Frontend: Confirms stock adjustments
+    Frontend->>Backend: POST /api/inventory/update
+    Backend-->>Frontend: Success Message
+```
 
 ## Future Roadmap
 - Replace in-memory mock databases with **PostgreSQL**.
